@@ -2,35 +2,39 @@
 
 <asp:Content ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
      <div class="col-md-offset-3" style="font-size:18px">
-    <div class="col-md-12" style="margin-top: 3%">
-        <div class="col-md-2">
-            <div class="row">
-                <asp:Label ID="Label1" runat="server" Text="Email"></asp:Label>
-                <br /><br />
-            </div>
-            <div class="row" style="margin-top: 2%">
-                <asp:Label ID="Label2" runat="server" Text="Password"></asp:Label>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="row">
-                <asp:TextBox ID="TxtEmail" runat="server" CssClass="form-control"></asp:TextBox>
-            </div>
-            <div class="row" style="margin-top: 2%">
-                <asp:TextBox ID="TxtPass" runat="server" TextMode="Password" CssClass="form-control"></asp:TextBox>
-            </div>
-        </div>
-    </div>
+<div class="row">
+             <div class="col-md-2" style="text-align:right">
+                 Email
+             </div>
+             <div class="col-md-3">
+                 <asp:TextBox ID="TxtEmail" runat="server" Width="100%" CssClass="form-control"></asp:TextBox>
+             </div>
+         </div>
+         <br />
+         <div class="row">
+             <div class="col-md-2" style="text-align:right">
+                 Password
+             </div>
+             <div class="col-md-3">
+                 <asp:TextBox ID="TxtPass" runat="server" Width="100%" CssClass="form-control"></asp:TextBox>
+             </div>
+         </div>
     <br />
+         <div class="row">
     <div class="col-md-4">
-        &nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <asp:Button ID="Button1" runat="server" Text="Entra" OnClick="Button1_Click" CssClass="btn btn-success" />
         &nbsp;&nbsp;&nbsp;&nbsp;<asp:Label ID="lblErr" runat="server" ForeColor="Red"></asp:Label>
     </div>
-    <div class="col-md-4" style="margin-top:3%">
+         </div>
+<br />
+         <div class="row">
+    <div class="col-md-5" style="margin-top:3%">
         Non hai ancora un account? Crealo usando il bottone sottostante!<br /><br />
         <asp:LinkButton ID="btnReg" CssClass ="btn btn-success" runat="server" Text="Registrati subito!">
         </asp:LinkButton>
     </div>
+         </div>
+
          </div>
 </asp:Content>
