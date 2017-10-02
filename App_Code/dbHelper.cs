@@ -15,12 +15,12 @@ public class dbHelper
 
 	}
     public void connetti()
-    {       
+    {
         SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder();
-        builder.DataSource = "hostingmmssql3.websitelive.netsql03;";
-        builder.UserID = "promostile_it_admin";
-        builder.Password = "pwd_db_psm";
-        builder.InitialCatalog = "promostile_it_PSM";
+        builder.DataSource = "tcp:promostile.database.windows.net,1433";
+        builder.UserID = "SimoneRicci";
+        builder.Password = "S1m0x_DJ";
+        builder.InitialCatalog = "promostile";
         connDb.ConnectionString = builder.ConnectionString;
         connDb.Open();
     } //metodo di connessione

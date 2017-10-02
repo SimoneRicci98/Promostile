@@ -36,15 +36,15 @@ public partial class Login : System.Web.UI.Page
             else
             {
                 help.connetti();
-                help.assegnaComando("SELECT ID_Utente FROM Utenti WHERE Email='" + email + "' AND Password='" + System.Web.Security.FormsAuthentication.HashPasswordForStoringInConfigFile(password, "md5") + "'");
+                help.assegnaComando("SELECT ID_Utente FROM Utenti WHERE Email='" + email + "' AND Psw='" + System.Web.Security.FormsAuthentication.HashPasswordForStoringInConfigFile(password, "md5") + "'");
                 rs = help.estraiDati();
                 rs.Read();
                 Session["Utente"] = rs["ID_Utente"].ToString();
                 help.disconnetti();
-                Response.Redirect("Seleziona.aspx");
+                Response.Redirect("Default.aspx");
             }
         }
-        catch(DivideByZeroException)
+        catch
         {
             help.disconnetti();
             lblErr.Text = "Nome utente o password errati!";
