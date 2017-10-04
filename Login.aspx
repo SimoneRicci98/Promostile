@@ -31,7 +31,7 @@
          <div class="row">
     <div class="col-md-5" style="margin-top:3%">
         Non hai ancora un account? Crealo usando il bottone sottostante!<br /><br />
-        <asp:LinkButton ID="btnReg" CssClass ="btn btn-success" runat="server" Text="Registrati subito!">
+        <asp:LinkButton ID="btnReg" CssClass ="btn btn-success" runat="server" Text="Registrati subito!" OnClick="btnReg_Click">
         </asp:LinkButton>
     </div>
          </div>

@@ -28,6 +28,8 @@ public partial class GestisciProdotti : System.Web.UI.Page
         dt.Columns.Add(new DataColumn("Col3", typeof(string)));
         dt.Columns.Add(new DataColumn("Col4", typeof(string)));
         dt.Columns.Add(new DataColumn("Col5", typeof(string)));
+        dt.Columns.Add(new DataColumn("Col6", typeof(string)));
+        dt.Columns.Add(new DataColumn("Col7", typeof(string)));
         dr = dt.NewRow();
         dr["RowNumber"] = 1;
         dr["Col1"] = string.Empty;
@@ -35,6 +37,8 @@ public partial class GestisciProdotti : System.Web.UI.Page
         dr["Col3"] = string.Empty;
         dr["Col4"] = string.Empty;
         dr["Col5"] = string.Empty;
+        dr["Col6"] = string.Empty;
+        dr["Col7"] = string.Empty;
         dt.Rows.Add(dr);
 
         ViewState["CurrentTable"] = dt;
@@ -47,6 +51,21 @@ public partial class GestisciProdotti : System.Web.UI.Page
         Page.Form.DefaultFocus = btnAdd.ClientID;
 
     }
+
+    protected void gridView_RowUpdating(object sender, GridViewUpdateEventArgs e)
+    {
+        GridViewRow row = grvProdotti.Rows[e.RowIndex];
+        FileUpload fileUpload = row.Cells[7].FindControl("FileUpload1") as FileUpload;
+        if (fileUpload != null && fileUpload.HasFile)
+        {
+            fileUpload.SaveAs(Server.MapPath("~/App_Data/Immagini/" + fileUpload.FileName));
+        }
+        else
+        {
+            MessageBox.Show("Upload Fallito");
+        }
+    }
+
     private void AddNewRow()
     {
         int rowIndex = 0;
@@ -64,6 +83,9 @@ public partial class GestisciProdotti : System.Web.UI.Page
                     TextBox Prezzo = (TextBox)grvProdotti.Rows[rowIndex].Cells[3].FindControl("txtPrezzo");
                     TextBox Qta = (TextBox)grvProdotti.Rows[rowIndex].Cells[4].FindControl("txtQta");
                     TextBox Marca = (TextBox)grvProdotti.Rows[rowIndex].Cells[5].FindControl("txtMarca");
+                    TextBox Taglie = (TextBox)grvProdotti.Rows[rowIndex].Cells[6].FindControl("txtTaglie");
+                    FileUpload Immagine = (FileUpload)grvProdotti.Rows[rowIndex].Cells[7].FindControl("FileUpload1");
+
 
                     drCurrentRow = dtCurrentTable.NewRow();
                     drCurrentRow["RowNumber"] = i + 1;
@@ -73,6 +95,8 @@ public partial class GestisciProdotti : System.Web.UI.Page
                     dtCurrentTable.Rows[i - 1]["Col3"] = Prezzo.Text;
                     dtCurrentTable.Rows[i - 1]["Col4"] = Qta.Text;
                     dtCurrentTable.Rows[i - 1]["Col5"] = Marca.Text;
+                    dtCurrentTable.Rows[i - 1]["Col5"] = Taglie.Text;
+                    dtCurrentTable.Rows[i - 1]["Col5"] = Immagine.FileName;
                     rowIndex++;
                 }
                 dtCurrentTable.Rows.Add(drCurrentRow);
@@ -105,6 +129,8 @@ public partial class GestisciProdotti : System.Web.UI.Page
                     TextBox Prezzo = (TextBox)grvProdotti.Rows[rowIndex].Cells[3].FindControl("txtPrezzo");
                     TextBox Qta = (TextBox)grvProdotti.Rows[rowIndex].Cells[4].FindControl("txtQta");
                     TextBox Marca = (TextBox)grvProdotti.Rows[rowIndex].Cells[4].FindControl("txtMarca");
+                    TextBox Taglie = (TextBox)grvProdotti.Rows[rowIndex].Cells[6].FindControl("txtTaglie");
+                    FileUpload Immagine = (FileUpload)grvProdotti.Rows[rowIndex].Cells[7].FindControl("FileUpload1");
 
                     grvProdotti.Rows[i].Cells[0].Text = Convert.ToString(i + 1);
                     Codice.Text = dt.Rows[i]["Col1"].ToString();
@@ -112,6 +138,8 @@ public partial class GestisciProdotti : System.Web.UI.Page
                     Prezzo.Text = dt.Rows[i]["Col3"].ToString();
                     Qta.Text = dt.Rows[i]["Col4"].ToString();
                     Marca.Text = dt.Rows[i]["Col5"].ToString();
+                    Taglie.Text = dt.Rows[i]["Col6"].ToString();
+                    Immagine = null; //++++++++++++++++++++++++++++++++ DA VEDERE++++++++++++++++++
                     rowIndex++;
                 }
             }
@@ -163,6 +191,10 @@ public partial class GestisciProdotti : System.Web.UI.Page
                     TextBox Prezzo = (TextBox)grvProdotti.Rows[rowIndex].Cells[3].FindControl("txtPrezzo");
                     TextBox Qta = (TextBox)grvProdotti.Rows[rowIndex].Cells[4].FindControl("txtQta");
                     TextBox Marca = (TextBox)grvProdotti.Rows[rowIndex].Cells[5].FindControl("txtMarca");
+                    TextBox Taglie = (TextBox)grvProdotti.Rows[rowIndex].Cells[6].FindControl("txtTaglie");
+                    FileUpload Immagine = (FileUpload)grvProdotti.Rows[rowIndex].Cells[7].FindControl("FileUpload1");
+
+
                     drCurrentRow = dtCurrentTable.NewRow();
                     drCurrentRow["RowNumber"] = i + 1;
 
@@ -170,7 +202,9 @@ public partial class GestisciProdotti : System.Web.UI.Page
                     dtCurrentTable.Rows[i - 1]["Col2"] = Descrizione.Text;
                     dtCurrentTable.Rows[i - 1]["Col3"] = Prezzo.Text;
                     dtCurrentTable.Rows[i - 1]["Col4"] = Qta.Text;
-                    dtCurrentTable.Rows[i - 1]["Col5"] = Qta.Text;
+                    dtCurrentTable.Rows[i - 1]["Col5"] = Marca.Text;
+                    dtCurrentTable.Rows[i - 1]["Col6"] = Taglie.Text;
+                    dtCurrentTable.Rows[i - 1]["Col7"] = Immagine.FileName;
                     rowIndex++;
                 }
 
@@ -199,9 +233,11 @@ public partial class GestisciProdotti : System.Web.UI.Page
                     string Prezzo = row.ItemArray[3] as string;
                     string Qta = row.ItemArray[4] as string;
                     string Marca = row.ItemArray[5] as string;
+                    string Taglie = row.ItemArray[6] as string;
+                    string Immagine = row.ItemArray[7] as string;
 
                     help.connetti();
-                    help.assegnaComando("INSERT INTO Prodotti(ID_Prodotto,Codice,Descrizione,Prezzo,Qta,Marca) VALUES('" + Codice + "','" + Descrizione + "'," + Prezzo + "," + Qta + ",'" + Marca + "')");
+                    help.assegnaComando("INSERT INTO Prodotti(Codice,Descrizione,Prezzo,Qta,Marca,Taglie,Immagine) VALUES('" + Codice + "','" + Descrizione + "'," + Prezzo + "," + Qta + ",'" + Marca + "','" + Taglie + "','" + Immagine + "')");
                     help.eseguicomando();
                     help.disconnetti();
                 }
@@ -212,55 +248,5 @@ public partial class GestisciProdotti : System.Web.UI.Page
         {
             MessageBox.Show(ex.Message);
         }
-    }
-
-    protected void btnAgg_Click(object sender, EventArgs e)
-    {
-        help.connetti();
-        help.assegnaComando("SELECT ID FROM Prodotti WHERE Descrizione ='" + drpProdotti.SelectedItem.Text + "'AND COD_Azienda ='" + Session["Azienda"].ToString() + "'");
-        rs = help.estraiDati();
-        rs.Read();
-        string app = rs["ID"].ToString();
-        help.disconnetti();
-
-        help.connetti();
-        help.assegnaComando("UPDATE Prodotti SET Qta=(SELECT Qta FROM Prodotti WHERE Descrizione ='" + drpProdotti.SelectedItem.Text + "' AND COD_Azienda ='" + Session["Azienda"].ToString() + "')+" + txtAgg.Text + " WHERE ID=" + app);
-        help.eseguicomando();
-        help.disconnetti();
-        txtAgg.Text = "";
-        Response.Redirect(Request.Url.AbsoluteUri);
-    }
-
-    protected void btnPrez_Click(object sender, EventArgs e)
-    {
-        help.connetti();
-        help.assegnaComando("SELECT ID FROM Prodotti WHERE Descrizione ='" + drpProdotti.SelectedItem.Text + "'AND COD_Azienda ='" + Session["Azienda"].ToString() + "'");
-        rs = help.estraiDati();
-        rs.Read();
-        string app = rs["ID"].ToString();
-        help.disconnetti();
-
-        help.connetti();
-        help.assegnaComando("UPDATE Prodotti SET Prezzo=" + txtPrez.Text + " WHERE ID=" + app);
-        help.eseguicomando();
-        help.disconnetti();
-        txtPrez.Text = "";
-        Response.Redirect(Request.Url.AbsoluteUri);
-    }
-
-    protected void btnElimina_Click(object sender, EventArgs e)
-    {
-        help.connetti();
-        help.assegnaComando("SELECT ID FROM Prodotti WHERE Descrizione ='" + drpProdotti.SelectedItem.Text + "'AND COD_Azienda ='" + Session["Azienda"].ToString() + "'");
-        rs = help.estraiDati();
-        rs.Read();
-        string app = rs["ID"].ToString();
-        help.disconnetti();
-
-        help.connetti();
-        help.assegnaComando("DELETE Prodotti WHERE ID=" + app);
-        help.eseguicomando();
-        help.disconnetti();
-        Response.Redirect(Request.Url.AbsoluteUri);
     }
 }
