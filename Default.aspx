@@ -15,13 +15,22 @@
                 <asp:BoundField DataField="Codice" HeaderText="Codice articolo" />
                 <asp:BoundField DataField="Desc" HeaderText="Descrizione" />
                 <asp:BoundField DataField="Prezzo" HeaderText="Prezzo" />
-                <asp:BoundField DataField="Qta" HeaderText="Quantità disponibile" />
+                <asp:TemplateField HeaderText="Quantità nel magazzino">
+                    <ItemTemplate>
+                        <asp:Label ID="lblQtaMag" runat="server" Text=""></asp:Label>
+                        </ItemTemplate>
+                </asp:TemplateField>
                 <asp:TemplateField HeaderText="Quantità nel carrello">
                     <ItemTemplate>
                        <asp:TextBox Width="40%" ID="txtQta" runat="server" ></asp:TextBox>
                     </ItemTemplate>
                 </asp:TemplateField>
-                <asp:ButtonField HeaderText="Aggiungi" Text="Aggiungi" />
+                <asp:TemplateField HeaderText="Taglie disponibli">
+                    <ItemTemplate>
+                        <asp:DropDownList ID="Taglie" runat="server"></asp:DropDownList>
+                    </ItemTemplate>
+                </asp:TemplateField>
+             <asp:ButtonField HeaderText="Aggiungi" Text="Aggiungi" />
             </Columns>
                         <EditRowStyle BackColor="#7C6F57" />
                         <FooterStyle BackColor="#1C5E55" Font-Bold="True" ForeColor="White" />

@@ -228,6 +228,8 @@ public partial class GestisciProdotti : System.Web.UI.Page
             {
                 foreach (DataRow row in table.Rows)
                 {
+                    string[] qtaArray;
+                    string[] taglieArray;
                     string Codice = row.ItemArray[1] as string;
                     string Descrizione = row.ItemArray[2] as string;
                     string Prezzo = row.ItemArray[3] as string;
@@ -236,10 +238,22 @@ public partial class GestisciProdotti : System.Web.UI.Page
                     string Taglie = row.ItemArray[6] as string;
                     string Immagine = row.ItemArray[7] as string;
 
+                    qtaArray = Qta.Split(',');
+                    taglieArray = Taglie.Split(',');
+
                     help.connetti();
-                    help.assegnaComando("INSERT INTO Prodotti(Codice,Descrizione,Prezzo,Qta,Marca,Taglie,Immagine) VALUES('" + Codice + "','" + Descrizione + "'," + Prezzo + "," + Qta + ",'" + Marca + "','" + Taglie + "','" + Immagine + "')");
+                    help.assegnaComando("INSERT INTO Prodotti(Codice,Descrizione,Prezzo,Marca,Immagine) VALUES('" + Codice + "','" + Descrizione + "'," + Prezzo + ",'"  + Immagine + "')");
                     help.eseguicomando();
                     help.disconnetti();
+
+                    for (int i = 0; i <= qtaArray.Length; i++)
+                    {
+                        help.connetti();
+                        help.assegnaComando("INSERT INTO Taglie(Cod_Prod,Qta,Taglia) VALUES('" + Codice + "','" + qtaArray[i] + "','" + taglieArray[i] + "'");
+                        help.eseguicomando();
+                        help.disconnetti();
+                    }
+
                 }
                 Response.Redirect(Request.Url.AbsoluteUri);
             }
